@@ -10,7 +10,8 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class CreatePostTest extends BaseApiTest{
 
-    @Test
+//    creating post with valid body
+    @Test(groups = {"positive"})
     public void createPost() {
 
         String body = JsonUtil.getJsonFromObject(new Post.PostBuilder().setTitle("silver").setBody("is my lovely cat").setUserId(13).build());
@@ -22,5 +23,13 @@ public class CreatePostTest extends BaseApiTest{
                 body("body", equalTo("is my lovely cat")).
                 body("userId", equalTo(13)).
                 body("id", equalTo(101));
+    }
+
+//    creating post with empty body
+    @Test(groups = {"negative"})
+    public void createPostWithEmptyBody() {
+
+        Response response = restApiClient.sendRequest(RequestMethod.POST, "/posts", null, null, null, null);
+        response.then().assertThat().statusCode(400);
     }
 }

@@ -12,8 +12,9 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class DeletePostTest extends BaseApiTest{
 
+//    deleting existing post
     @Parameters({"postId"})
-    @Test
+    @Test(groups = {"positive"})
     public void deletePost(int postId) {
 
         HashMap<String, String> pathParams = new HashMap<>();
@@ -22,5 +23,17 @@ public class DeletePostTest extends BaseApiTest{
         Response response = restApiClient.sendRequest(RequestMethod.DELETE, "/posts/{id}", null, null, null, pathParams);
         response.then().assertThat().statusCode(200);
         assertThat(response.asString(), equalTo("{}"));
+    }
+
+//    deleting not existing post
+    @Parameters({"invalidPostId"})
+    @Test(groups = {"negative"})
+    public void deleteNotExistingPost(int postId) {
+
+        HashMap<String, String> pathParams = new HashMap<>();
+        pathParams.put("id", String.valueOf(postId));
+
+        Response response = restApiClient.sendRequest(RequestMethod.DELETE, "/posts/{id}", null, null, null, pathParams);
+        response.then().assertThat().statusCode(404);
     }
 }

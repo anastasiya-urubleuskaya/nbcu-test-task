@@ -8,12 +8,14 @@ public class Post {
     private int id;
     private String title;
     private String body;
+    private String fakeTitle;
     private int userId;
 
     private Post(PostBuilder builder) {
         id = builder.id;
         title = builder.title;
         body = builder.body;
+        fakeTitle = builder.fakeTitle;
         userId = builder.userId;
     }
 
@@ -21,6 +23,7 @@ public class Post {
         private int id;
         private String title;
         private String body;
+        private String fakeTitle;
         private int userId;
 
         public PostBuilder() {
@@ -38,6 +41,11 @@ public class Post {
 
         public PostBuilder setBody(String body) {
             this.body = body;
+            return this;
+        }
+
+        public PostBuilder setFakeTitle(String fakeTitle) {
+            this.fakeTitle = fakeTitle;
             return this;
         }
 
@@ -81,5 +89,13 @@ public class Post {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getFakeTitle() {
+        return fakeTitle;
+    }
+
+    public void setFakeTitle(String fakeTitle) {
+        this.fakeTitle = fakeTitle;
     }
 }

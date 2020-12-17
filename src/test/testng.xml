@@ -4,7 +4,15 @@
        parallel="classes" thread-count="3"
        configfailurepolicy="continue">
     <parameter name="postId" value="3" />
+    <parameter name="invalidPostId" value="-3" />
+    <parameter name="invalidTitle" value="777" />
     <test name="Posts operations api test">
+        <groups>
+            <run>
+                <include name="positive"/>
+                <exclude name="negative"/>
+            </run>
+        </groups>
         <classes>
             <class name="epam.com.tests.CreatePostTest"/>
             <class name="epam.com.tests.GetCommentsTest"/>

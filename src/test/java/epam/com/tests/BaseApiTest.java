@@ -1,6 +1,6 @@
 package epam.com.tests;
 
-import epam.com.client.RestApiClient;
+import epam.com.core.RestApiClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;

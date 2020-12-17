@@ -15,8 +15,9 @@ import static org.hamcrest.Matchers.*;
 
 public class UpdatePostTest extends BaseApiTest{
 
+//    update post happy path
     @Parameters({"postId"})
-    @Test
+    @Test(groups = {"positive"})
     public void updatePost(int postId) {
 
         String body = JsonUtil.getJsonFromObject(new Post.PostBuilder().setId(postId).setTitle("silver").setUserId(777).build());
@@ -30,5 +31,18 @@ public class UpdatePostTest extends BaseApiTest{
                 body("title", equalTo("silver")).
                 body("userId", equalTo(777)).
                 body("$", not(hasKey("body")));
+    }
+
+//    update post invalid id
+    @Parameters({"postId", "invalidPostId"})
+    @Test(groups = {"negative"})
+    public void updatePostInvalidId(int postId, int invalidPostId) {
+
+        String body = JsonUtil.getJsonFromObject(new Post.PostBuilder().setId(postId).build());
+        HashMap<String, String> pathParams = new HashMap<>();
+        pathParams.put("id", String.valueOf(invalidPostId));
+
+        Response response = restApiClient.sendRequest(RequestMethod.PUT, "/posts/{id}", body, null, null, pathParams);
+        response.then().assertThat().statusCode(404);
     }
 }
